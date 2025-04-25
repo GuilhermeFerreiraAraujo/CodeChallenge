@@ -193,4 +193,9 @@ public class PortfolioServices : IPortfolioServices
             TotalFounds = totalInFounds,
         };
     }
+
+    public bool IsClient(string investorId)
+    {
+        return _investments.Any(x => x.InvestorId == investorId);
+    }
 }
