@@ -15,12 +15,11 @@ var quotes = quoteFileReader.ReadFile().ToList();
 
 var percentages = transactions.Where(x => x.Type == "Percentage").ToList();
 var shares = transactions.Where(x => x.Type == "Shares").ToList();
+var realStateTransactions = transactions.Where(x => x.Type == "Building" || x.Type == "Estate").ToList();
+
 var foundsInvestments = investments.Where(x => x.InvestorId.Contains("Fonds")).ToList();
 
-
-
-
-var portfolioServices = new PortfolioServices(transactions, quotes, investments, percentages, shares, foundsInvestments);
+var portfolioServices = new PortfolioServices(transactions, quotes, investments, percentages, shares, foundsInvestments, realStateTransactions);
 
 var line = Console.ReadLine();
 
@@ -32,10 +31,12 @@ while (!string.IsNullOrWhiteSpace(line))
     var input = line.Split(Config.CsvDelimiter);
     var date = DateTime.Parse(input[0]);
     var investorId = input[1];
+
+
     
-    var result = portfolioServices.GetTotalFoundsValue(date, investorId);
+    //var result = portfolioServices.GetTotalFoundsValue(date, investorId);
     
-    //var result = portfolioServices.GetPortfolioValue(date, investorId);
+    var result = portfolioServices.GetPortfolioValue(date, investorId);
     
     line = Console.ReadLine();
     

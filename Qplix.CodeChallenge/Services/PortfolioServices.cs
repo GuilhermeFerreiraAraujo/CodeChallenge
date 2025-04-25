@@ -13,11 +13,12 @@ public class PortfolioServices : IPortfolioServices
     private List<Transaction> _investmentsPercentages;
     private List<Transaction> _shares;
     private List<Investment> _foundsInvestments;
-
+    private List<Transaction> _realStateTransactions;
 
     public PortfolioServices(List<Transaction> transactions, List<Quote> quotes, List<Investment> investments,
         List<Transaction> investmentsPercentages, List<Transaction> shares,
-        List<Investment> foundsInvestments)
+        List<Investment> foundsInvestments,
+        List<Transaction> realStateTransactions)
     {
         _investments = investments;
         _transactions = transactions;
@@ -25,6 +26,7 @@ public class PortfolioServices : IPortfolioServices
         _investmentsPercentages = investmentsPercentages;
         _shares = shares;
         _foundsInvestments = foundsInvestments;
+        _realStateTransactions = realStateTransactions;
     }
 
  
@@ -39,7 +41,62 @@ public class PortfolioServices : IPortfolioServices
         return 0;
     }
 
-    public decimal GetTotalFoundsValue(DateTime date, string investorId)
+
+    public decimal GetTotalInvestorStocksValue(DateTime date, string investorId)
+    {
+        var stocks = _investments.Where(i => i.InvestmentType == InvestmentTypes.Stock && i.InvestorId == investorId).ToList();
+
+        var summedTransactions = _shares
+            .Where(x => x.Date <= date)
+            .GroupBy(x => x.InvestmentId)
+            .Select(x => new { InvestmentId = x.Key, Value = x.Sum(i => i.Value) }).ToList();
+
+        var quotes = GetStockQuotes(date);
+        
+        var stockTransactions = from stock in stocks
+
+            join share in summedTransactions on stock.InvestmentId equals share.InvestmentId
+            join quote in quotes on stock.Isin equals quote.Isin
+
+            select new
+            { 
+                stock.Isin,
+                stock.InvestmentId,
+                Amount = share.Value,
+                Price = quote.Value,
+                Total = CalculateStockValue(quote.Value, share.Value)
+            };
+
+        var queryResult = stockTransactions.ToList();
+        var sum = stockTransactions.Sum(x => x.Total);
+        
+        return sum;
+    }
+    
+    
+    public decimal GetTotalInvestorRealStateValue(DateTime date, string investorId)
+    {
+        var realStateInvestments = _investments.Where(x => x.InvestmentType == InvestmentTypes.RealEstate && x.InvestorId== investorId).ToList();
+        
+        var summedTransactions = _realStateTransactions.Where(x => x.Date <= date)
+            .Where(x => x.Date <= date)
+            .GroupBy(x => x.InvestmentId)
+            .Select(x => new { InvestmentId = x.Key, Value = x.Sum(i => i.Value) }).ToList();
+        
+        var query = from stock in realStateInvestments
+
+            join share in summedTransactions on stock.InvestmentId equals share.InvestmentId
+
+            select new
+            { 
+                stock.InvestmentId,
+                Value = share.Value,
+            };
+        
+        return query.Sum(x => x.Value);
+    }
+    
+    public decimal GetTotalInvestorFoundsValue(DateTime date, string investorId)
     {
         var percentages = _investmentsPercentages.Where(x => x.Date <= date)
             .GroupBy(x => x.InvestmentId)
@@ -94,11 +151,7 @@ public class PortfolioServices : IPortfolioServices
         var investments = _investments.Where(x => ids.Contains(x.InvestorId)).ToList();
 
         var foundsGrouped = investments.GroupBy(x => new { FoundId = x.InvestorId, InvestmentId = x.InvestmentId });
-
-        //var investmentsIds = investments.Select(x => x.InvestmentId).Distinct().ToList();
-
-        //var transactions = summedTransactions.Where(x => investmentsIds.Contains(x.InvestmentId)).ToList();
-
+        
         var groupDateQuery = from transaction in summedTransactions
             join investment in investments
                 on transaction.InvestmentId equals investment.InvestmentId
@@ -127,112 +180,34 @@ public class PortfolioServices : IPortfolioServices
         return foundsValues;
     }
     
-    public decimal GetStockValue(decimal price, decimal amount)
+    public decimal CalculateStockValue(decimal price, decimal amount)
     {
         return price * amount;
     }
 
-    public PortfolioTotalResponse GetPortfolioValue(DateTime date, string InvestorId)
+    public List<StockQuote> GetStockQuotes(DateTime date)
     {
+        var result = _quotes
+            .Where(x => x.Date <= date)
+            .GroupBy(x => x.Isin, (key,g) => g.OrderByDescending(e => e.PricePerShare).First())
+            .Select(x => new StockQuote {Isin = x.Isin, Value = x.PricePerShare}).ToList();
 
-        var totalInvestments = GetInvestments(InvestorId);
-
-        var investmentIds = totalInvestments.Select(i => i.InvestmentId).ToList();
-
-        var transactions = _transactions.Where(i => investmentIds.Contains(i.InvestmentId)).ToList();
-
-        var stocks = GetStocksFromInvestments(totalInvestments);
-
-        decimal totalInStocks = 0;
-
-        stocks.ForEach(x =>
-        {
-            var isin = x.Isin;
-
-            var amount = GetStockAmount(transactions, isin, date);
-
-            if (amount <= 0) return;
-
-            var price = GetStockPrice(isin, date);
-
-            var total = GetStockValue(price, amount);
-
-            totalInStocks += total;
-        });
-
-        var realStateIds = GetRealStateFromInvestments(totalInvestments).Select(x => x.InvestmentId).ToList();
-
-        var realStateTransactions = GetRealStateTransactions(transactions, realStateIds);
-
-        decimal realStateTotal = 0;
-
-        realStateTransactions.ForEach(x => { realStateTotal += x.Value; });
-
-
-        var founds = GetFondsFromInvestments(totalInvestments);
-
-        var foundsInvestmentIds = founds.Select(i => i.InvestmentId).ToList();
-
-        var foundsTransactions =
-            _transactions.Where(i => foundsInvestmentIds.Contains(i.InvestmentId) && i.Date <= date).ToList();
-
-        var foundsValues = foundsTransactions
-            .GroupBy(i => i.InvestmentId).Select(x => new
-            {
-                InvesmentId = x.Key,
-                Value = x.Sum(y => y.Value),
-            });
-
-        var foundsTotalValues = founds
-            .GroupBy(x => new { FoundsInvestor = x.FoundsInvestor, InvestmentId = x.InvestmentId })
-            .Select(x => new
-            {
-                FoundsInvestor = x.Key.FoundsInvestor,
-                InvestmentId = x.Key.InvestmentId,
-                Value = foundsValues.Where(y => y.InvesmentId == x.Key.InvestmentId).Sum(i => i.Value)
-            }).ToList();
-
-        var foundsTotalIds = foundsTotalValues.Select(i => i.FoundsInvestor).Distinct().ToList();
-        
-        
-        
-        var foundInvestors = _investments.Where(i => foundsTotalIds.Contains(i.InvestorId)).ToList();
-        
-        var foundsInvestorsInvestmentsIds = foundInvestors.Select(i => i.InvestmentId).ToList();
-        
-        var trans = _transactions.Where(i =>   i.Type=="Shares" && foundsInvestorsInvestmentsIds.Contains(i.InvestmentId)).ToList();
-        
-        
-        
-    decimal foundsTotal = 0;
-
-
-        var foundsInvested = foundsTransactions
-            .Where(i => i.Date <= date)
-            .GroupBy(i => i.InvestmentId)
-            .Select(x =>new { InvestmentId = x.Key, Value = x.Sum(i => i.Value) }).ToList();
-        
+        return result;
+    }
     
+    public PortfolioTotalResponse GetPortfolioValue(DateTime date, string investorId)
+    {
+        var totalInStocks = GetTotalStocksValue(date, investorId);
 
+        var totalInFounds = GetTotalInvestorFoundsValue(date, investorId);
 
-
-        
-        
-        founds.ForEach(x =>
-        {
-            var percentageInvested = foundsInvested.Where(i => i.InvestmentId == x.InvestmentId).FirstOrDefault().Value;
-
-            var foundValue = foundsTotalValues.Where(y => y.FoundsInvestor == x.FoundsInvestor).FirstOrDefault().Value;
-
-            foundsTotal += GetFoundsPercentage(percentageInvested, foundValue);
-
-        });
+        var realStateTotal = GetTotalInvestorRealStateValue(date, investorId)
 
         return new PortfolioTotalResponse
         {
             TotalStocks = totalInStocks,
             TotalRealState = realStateTotal,
-            TotalFounds = foundsTotal,
+            TotalFounds = totalInFounds,
         };
     }
 
