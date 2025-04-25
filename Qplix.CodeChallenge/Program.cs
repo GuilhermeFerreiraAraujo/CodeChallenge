@@ -6,6 +6,10 @@ using Qplix.CodeChallenge.Enums;
 using Qplix.CodeChallenge.Services;
 using Qplix.CodeChallenge.Utils;
 
+
+#region PROJECT SET UP, reading files, loading datasets...
+
+
 var investmentFileReader = new FileReader<Investment>(Config.FilePath,"Investments.csv");
 var transactionFileReader = new FileReader<Transaction>(Config.FilePath,"Transactions.csv");
 var quoteFileReader = new FileReader<Quote>(Config.FilePath,"Quotes.csv");  
@@ -22,30 +26,25 @@ var foundsInvestments = investments.Where(x => x.InvestorId.Contains("Fonds")).T
 
 var portfolioServices = new PortfolioServices(transactions, quotes, investments, percentages, shares, foundsInvestments, realStateTransactions);
 
+
+
+#endregion
+
 var line = Console.ReadLine();
 
 
 while (!string.IsNullOrWhiteSpace(line))
 {
-    
-    
     var input = line.Split(Config.CsvDelimiter);
     var date = DateTime.Parse(input[0]);
     var investorId = input[1];
-
-
-    
     
     var result = portfolioServices.GetPortfolioValue(date, investorId);
     
     Console.WriteLine($"Total founds {result.TotalFounds}");
     Console.WriteLine($"Total stocks {result.TotalStocks}");
     Console.WriteLine($"Total real state {result.TotalRealState}");
+    Console.WriteLine($"Total {result.TotalFounds + result.TotalStocks + result.TotalRealState}");
 
     line = Console.ReadLine();
-    
 }
-
-
-
-Console.WriteLine("Hello, World!");

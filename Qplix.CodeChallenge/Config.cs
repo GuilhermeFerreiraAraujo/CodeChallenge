@@ -1,6 +1,6 @@
 using System;
 
-namespace Qplix.CodeChallenge.Utils;
+namespace Qplix.CodeChallenge;
     
     public static class Config
     {

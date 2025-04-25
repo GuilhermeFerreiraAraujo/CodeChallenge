@@ -29,20 +29,7 @@ public class PortfolioServices : IPortfolioServices
         _foundsInvestments = foundsInvestments;
         _realStateTransactions = realStateTransactions;
     }
-
- 
-    public decimal GetTotalRealStateValue(DateTime date, string investorId)
-    {
-        return 0;
-    }
-
-    public decimal GetTotalStocksValue(DateTime date, string investorId)
-    {
-
-        return 0;
-    }
-
-
+    
     public decimal GetTotalInvestorStocksValue(DateTime date, string investorId)
     {
         var stocks = _investments.Where(i => i.InvestmentType == InvestmentTypes.Stock && i.InvestorId == investorId).ToList();
@@ -68,7 +55,6 @@ public class PortfolioServices : IPortfolioServices
                 Total = CalculateStockValue(quote.Value, share.Value)
             };
 
-        var queryResult = stockTransactions.ToList();
         var sum = stockTransactions.Sum(x => x.Total);
         
         return sum;
@@ -91,7 +77,7 @@ public class PortfolioServices : IPortfolioServices
             select new
             { 
                 stock.InvestmentId,
-                Value = share.Value,
+                share.Value,
             };
         
         return query.Sum(x => x.Value);
@@ -211,128 +197,4 @@ public class PortfolioServices : IPortfolioServices
             TotalFounds = totalInFounds,
         };
     }
-
-    public decimal GetFoundsPercentage(decimal percentage, decimal totalFound)
-    {
-        return percentage * totalFound;
-    }
-    
-    public decimal GetFoundsInvestedByInvestmentId(List<Transaction> transactions,string InvestmentId, DateTime date)
-    {
-        var value = transactions.Where(x => x.InvestmentId == InvestmentId && x.Date <= date).Sum(x => x.Value);
-        return value;
-    }
-    
-    public decimal GetFoundsValue(string fondId)
-    {
-        var founds = _investments.Where(x => x.FoundsInvestor == fondId)
-            .Select(x => x.InvestmentId).ToList();
-
-        var transasctions = GetFoundsTransactions(founds);
-        
-        var total = transasctions.Sum(x => x.Value);
-
-        return total;
-
-    }
-
-    public List<Transaction> GetFoundsTransactions(List<string> transactionIds)
-    {
-        var transactions = _transactions.Where(x => transactionIds.Contains(x.InvestmentId)).ToList();
-        return transactions;
-    }
-    
-    public List<Transaction> GetRealStateTransactions(List<Transaction> transactions, List<string> investmentIds)
-    {
-        return transactions.Where(x => investmentIds.Contains(x.InvestmentId)).ToList();
-    }
-    
-
-   
-
-
-    public List<Investment> GetInvestments(string InvestorId)
-    {
-        return _investments.Where(x=>x.InvestorId == InvestorId).ToList();
-    }
-
-    public List<Investment> GetStocksFromInvestments(List<Investment> investments)
-    {
-        return investments.Where(x => x.InvestmentType == InvestmentTypes.Stock).ToList();
-    }
-    
-    public List<Investment> GetRealStateFromInvestments(List<Investment> investments)
-    {
-        return investments.Where(x => x.InvestmentType == InvestmentTypes.RealEstate).ToList();
-    }
-    
-    public List<Investment> GetFondsFromInvestments(List<Investment> investments)
-    {
-        return investments.Where(x => x.InvestmentType == InvestmentTypes.Fonds).ToList();
-    }
-    
-    
-    
-    public decimal GetStockAmount(List<Transaction> transactions, string investmentId, DateTime date)
-    {
-        var value = transactions.Where(x=>x.InvestmentId == investmentId && x.Date <= date)
-            .GroupBy(t => t.InvestmentId)
-            .Select(g => g.Sum(t => t.Value)).FirstOrDefault();
-        return value;
-    }
-
-
-    public decimal GetStockPrice(string isin, DateTime date)
-    {
-        var price = _quotes.Where(x => x.Isin == isin && x.Date <= date)
-            .OrderByDescending(x => x.Date)
-            .First().PricePerShare;
-
-        return price;
-    }
-    
-    
-    public List<Quote> GetStockPrices(string isin)
-    {
-        return _quotes.Where(x=> x.Isin == isin).ToList();  
-    }
-    
-    
-    public List<Transaction> GetStockTransactions(string investmentId)
-    {
-        
-        var list = _transactions.Where(t => t.InvestmentId == investmentId).ToList();
-        return list;
-        
-    }
-
-    
-    
-    public List<Transaction> GetTransactions(DateTime date, string InvestorId)
-    {
-        
-        var transactions = _transactions.Where(x=> x.InvestmentId == "Investment12537");
-        
-        
-        return transactions.ToList();
-        
-    }
-    
-    
-    public List<Investment> GetStocks()
-    {
-        return _investments.Where(x => x.InvestmentType == InvestmentTypes.Stock).ToList();
-    }
-    public List<string> GetInvestmentTypes()
-    {
-        var investmentTypes = _investments.GroupBy(i => i.InvestmentType).Select(i => i.Key.ToString()).ToList();
-        return investmentTypes;
-    }
-
-    public List<Investment> GetInvestorInvestments(string InvestorId)
-    {
-        return _investments.Where(x => x.InvestorId == InvestorId).ToList();
-    }
-
-
 }
