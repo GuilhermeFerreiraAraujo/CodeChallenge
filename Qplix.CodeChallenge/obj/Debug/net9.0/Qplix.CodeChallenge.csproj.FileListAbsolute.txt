@@ -1,0 +1,14 @@
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/bin/Debug/net9.0/Qplix.CodeChallenge
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/bin/Debug/net9.0/Qplix.CodeChallenge.deps.json
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/bin/Debug/net9.0/Qplix.CodeChallenge.runtimeconfig.json
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/bin/Debug/net9.0/Qplix.CodeChallenge.dll
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/bin/Debug/net9.0/Qplix.CodeChallenge.pdb
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.GeneratedMSBuildEditorConfig.editorconfig
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.AssemblyInfoInputs.cache
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.AssemblyInfo.cs
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.csproj.CoreCompileInputs.cache
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.dll
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/refint/Qplix.CodeChallenge.dll
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.pdb
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.genruntimeconfig.cache
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/ref/Qplix.CodeChallenge.dll
