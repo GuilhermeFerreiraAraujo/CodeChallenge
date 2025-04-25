@@ -1,5 +1,6 @@
 using Models;
 using Models.Responses;
+using Qplix.CodeChallenge.Enums;
 using Qplix.CodeChallenge.Interfaces;
 
 namespace Qplix.CodeChallenge.Services;
@@ -197,11 +198,11 @@ public class PortfolioServices : IPortfolioServices
     
     public PortfolioTotalResponse GetPortfolioValue(DateTime date, string investorId)
     {
-        var totalInStocks = GetTotalStocksValue(date, investorId);
+        var totalInStocks = GetTotalInvestorStocksValue(date, investorId);
 
         var totalInFounds = GetTotalInvestorFoundsValue(date, investorId);
 
-        var realStateTotal = GetTotalInvestorRealStateValue(date, investorId)
+        var realStateTotal = GetTotalInvestorRealStateValue(date, investorId);
 
         return new PortfolioTotalResponse
         {

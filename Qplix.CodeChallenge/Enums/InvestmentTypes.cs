@@ -1,4 +1,4 @@
-namespace Qplix.CodeChallenge;
+namespace Qplix.CodeChallenge.Enums;
 
 public enum InvestmentTypes
 {
