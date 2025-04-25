@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Qplix.CodeChallenge")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d7ab2e15ea84d7a66501f06636dbb1b1c9f8c597")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd62fd9bf97640a4dc020546ac5c54b6f275ae09")]
 [assembly: System.Reflection.AssemblyProductAttribute("Qplix.CodeChallenge")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Qplix.CodeChallenge")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

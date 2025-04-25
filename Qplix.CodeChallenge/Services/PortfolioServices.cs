@@ -37,7 +37,7 @@ public class PortfolioServices : IPortfolioServices
         var summedTransactions = _shares
             .Where(x => x.Date <= date)
             .GroupBy(x => x.InvestmentId)
-            .Select(x => new { InvestmentId = x.Key, Value = x.Sum(i => i.Value) }).ToList();
+            .Select(x => new { InvestmentId = x.Key, Value = x.Sum(i => i.Value) });
 
         var quotes = GetStockQuotes(date);
         
@@ -87,8 +87,7 @@ public class PortfolioServices : IPortfolioServices
     {
         var percentages = _investmentsPercentages.Where(x => x.Date <= date)
             .GroupBy(x => x.InvestmentId)
-            .Select(x => new {InvestmentId = x.Key, Value = x.Sum(y => y.Value) })
-            .ToList();
+            .Select(x => new {InvestmentId = x.Key, Value = x.Sum(y => y.Value) });
 
         var investments = _investments.Where(x => x.InvestmentType == InvestmentTypes.Fonds && x.InvestorId == investorId).ToList();
         
@@ -103,9 +102,9 @@ public class PortfolioServices : IPortfolioServices
             };
         
         var foundsPercentage = query.GroupBy(x => x.FoundsInvestor)
-            .Select(x => new { FoundsInvestor = x.Key, Value = x.Sum(y => y.Value) }).ToList();
+            .Select(x => new { FoundsInvestor = x.Key, Value = x.Sum(y => y.Value) });
         
-        var foundIds = investments.Select(x => x.FoundsInvestor).Distinct().ToList();
+        var foundIds = investments.Select(x => x.FoundsInvestor).Distinct();
         
         var foundValues = GetFoundsValuesByIds(foundIds, date);
 
@@ -128,14 +127,14 @@ public class PortfolioServices : IPortfolioServices
         return foundsValue * percentage;
     }
     
-    public List<FoundValue> GetFoundsValuesByIds(List<string> ids, DateTime date)
+    public IEnumerable<FoundValue> GetFoundsValuesByIds(IEnumerable<string> ids, DateTime date)
     {
         var summedTransactions = _shares
             .Where(x => x.Date <= date)
             .GroupBy(x => x.InvestmentId)
-            .Select(x => new { InvestmentId = x.Key, Value = x.Sum(i => i.Value) }).ToList();
+            .Select(x => new { InvestmentId = x.Key, Value = x.Sum(i => i.Value) });
 
-        var investments = _investments.Where(x => ids.Contains(x.InvestorId)).ToList();
+        var investments = _investments.Where(x => ids.Contains(x.InvestorId));
 
         var foundsGrouped = investments.GroupBy(x => new { FoundId = x.InvestorId, InvestmentId = x.InvestmentId });
         
@@ -147,12 +146,9 @@ public class PortfolioServices : IPortfolioServices
                 transaction.InvestmentId,
                 transaction.Value
             };
-
-        var transactions = groupDateQuery.ToList();
-        
         
         var query = from founds in foundsGrouped
-            join Transaction in transactions
+            join Transaction in groupDateQuery
                 on founds.Key.InvestmentId equals Transaction.InvestmentId
             select new
             {
@@ -162,7 +158,7 @@ public class PortfolioServices : IPortfolioServices
             };
 
         var foundsValues = query.GroupBy(x => x.FoundId)
-            .Select(x => new FoundValue() { FoundId = x.Key, Value = x.Sum(i => i.Value) }).ToList();
+            .Select(x => new FoundValue() { FoundId = x.Key, Value = x.Sum(i => i.Value) });
 
         return foundsValues;
     }
@@ -172,12 +168,12 @@ public class PortfolioServices : IPortfolioServices
         return price * amount;
     }
 
-    public List<StockQuote> GetStockQuotes(DateTime date)
+    public IEnumerable<StockQuote> GetStockQuotes(DateTime date)
     {
         var result = _quotes
             .Where(x => x.Date <= date)
             .GroupBy(x => x.Isin, (key,g) => g.OrderByDescending(e => e.PricePerShare).First())
-            .Select(x => new StockQuote {Isin = x.Isin, Value = x.PricePerShare}).ToList();
+            .Select(x => new StockQuote {Isin = x.Isin, Value = x.PricePerShare});
 
         return result;
     }

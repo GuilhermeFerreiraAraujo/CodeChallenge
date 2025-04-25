@@ -41,10 +41,10 @@ while (!string.IsNullOrWhiteSpace(line))
     
     var result = portfolioServices.GetPortfolioValue(date, investorId);
     
-    Console.WriteLine($"Total founds {result.TotalFounds}");
-    Console.WriteLine($"Total stocks {result.TotalStocks}");
-    Console.WriteLine($"Total real state {result.TotalRealState}");
-    Console.WriteLine($"Total {result.TotalFounds + result.TotalStocks + result.TotalRealState}");
+    Console.WriteLine($"Total founds {result.TotalFounds.DecimalToMoney()}");
+    Console.WriteLine($"Total stocks {result.TotalStocks.DecimalToMoney()}");
+    Console.WriteLine($"Total real state {result.TotalRealState.DecimalToMoney()}");
+    Console.WriteLine($"Total {(result.TotalFounds + result.TotalStocks + result.TotalRealState).DecimalToMoney()}");
 
     line = Console.ReadLine();
 }
