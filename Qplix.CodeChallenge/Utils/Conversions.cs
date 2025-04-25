@@ -4,7 +4,6 @@ namespace Qplix.CodeChallenge.Utils;
 
 public static class Conversions
 {
-
     public static decimal StringToDecimal(this string number)
     {
         decimal localCultreResult;
@@ -12,7 +11,4 @@ public static class Conversions
 
         return localCultreResult;
     }
-    
-    
-    
 }
