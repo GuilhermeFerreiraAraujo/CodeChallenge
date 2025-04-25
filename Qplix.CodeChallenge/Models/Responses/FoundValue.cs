@@ -2,7 +2,7 @@ namespace Models.Responses;
 
 public class FoundValue
 {
-    string FoundId { get; set; }
+    public string FoundId { get; set; }
     
-    decimal Value { get; set; } 
+    public decimal Value { get; set; } 
 }

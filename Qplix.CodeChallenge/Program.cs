@@ -13,26 +13,14 @@ var investments = investmentFileReader.ReadFile();
 var transactions = transactionFileReader.ReadFile();
 var quotes = quoteFileReader.ReadFile().ToList();
 
-
-
 var percentages = transactions.Where(x => x.Type == "Percentage").ToList();
-
 var shares = transactions.Where(x => x.Type == "Shares").ToList();
-
-
-var foudsInvestments = investments.Where(x => x.InvestorId.Contains("Fonds")).ToList();
-
-var fondsIds = foudsInvestments.Select(x => x.InvestorId).Distinct().ToList();
+var foundsInvestments = investments.Where(x => x.InvestorId.Contains("Fonds")).ToList();
 
 
 
-var portfolioServices = new PortfolioServices(transactions, quotes, investments, percentages, shares);
 
-
-
-var foundsValue = portfolioServices.GetFoundsValuesByIds(fondsIds, DateTime.Now);
-
-
+var portfolioServices = new PortfolioServices(transactions, quotes, investments, percentages, shares, foundsInvestments);
 
 var line = Console.ReadLine();
 
@@ -43,9 +31,11 @@ while (!string.IsNullOrWhiteSpace(line))
     
     var input = line.Split(Config.CsvDelimiter);
     var date = DateTime.Parse(input[0]);
-    var investmentId = input[1];
+    var investorId = input[1];
     
-    var result = portfolioServices.GetPortfolioValue(date, investmentId);
+    var result = portfolioServices.GetTotalFoundsValue(date, investorId);
+    
+    //var result = portfolioServices.GetPortfolioValue(date, investorId);
     
     line = Console.ReadLine();
     

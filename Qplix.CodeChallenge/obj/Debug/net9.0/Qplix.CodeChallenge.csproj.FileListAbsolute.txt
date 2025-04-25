@@ -12,3 +12,4 @@
 /Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.pdb
 /Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.genruntimeconfig.cache
 /Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/ref/Qplix.CodeChallenge.dll
+/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/Debug/net9.0/Qplix.CodeChallenge.sourcelink.json
