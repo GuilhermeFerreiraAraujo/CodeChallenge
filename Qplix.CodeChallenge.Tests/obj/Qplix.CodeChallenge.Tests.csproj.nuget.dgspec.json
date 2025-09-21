@@ -1,33 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge.Tests/Qplix.CodeChallenge.Tests.csproj": {}
+    "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge.Tests\\Qplix.CodeChallenge.Tests.csproj": {}
   },
   "projects": {
-    "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge.Tests/Qplix.CodeChallenge.Tests.csproj": {
+    "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge.Tests\\Qplix.CodeChallenge.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge.Tests/Qplix.CodeChallenge.Tests.csproj",
+        "projectUniqueName": "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge.Tests\\Qplix.CodeChallenge.Tests.csproj",
         "projectName": "Qplix.CodeChallenge.Tests",
-        "projectPath": "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge.Tests/Qplix.CodeChallenge.Tests.csproj",
-        "packagesPath": "/Users/guilhermeferreira/.nuget/packages/",
-        "outputPath": "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge.Tests/obj/",
+        "projectPath": "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge.Tests\\Qplix.CodeChallenge.Tests.csproj",
+        "packagesPath": "C:\\Users\\MEGA 9000X\\.nuget\\packages\\",
+        "outputPath": "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge.Tests\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/guilhermeferreira/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\MEGA 9000X\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/Qplix.CodeChallenge.csproj": {
-                "projectPath": "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/Qplix.CodeChallenge.csproj"
+              "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge\\Qplix.CodeChallenge.csproj": {
+                "projectPath": "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge\\Qplix.CodeChallenge.csproj"
               }
             }
           }
@@ -42,7 +48,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -85,26 +91,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/Qplix.CodeChallenge.csproj": {
+    "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge\\Qplix.CodeChallenge.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/Qplix.CodeChallenge.csproj",
+        "projectUniqueName": "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge\\Qplix.CodeChallenge.csproj",
         "projectName": "Qplix.CodeChallenge",
-        "projectPath": "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/Qplix.CodeChallenge.csproj",
-        "packagesPath": "/Users/guilhermeferreira/.nuget/packages/",
-        "outputPath": "/Users/guilhermeferreira/Desktop/CodeChallenge/Qplix.CodeChallenge/obj/",
+        "projectPath": "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge\\Qplix.CodeChallenge.csproj",
+        "packagesPath": "C:\\Users\\MEGA 9000X\\.nuget\\packages\\",
+        "outputPath": "C:\\Github\\CodeChallenge\\Qplix.CodeChallenge\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/guilhermeferreira/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\MEGA 9000X\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -123,7 +135,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -144,7 +156,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
