@@ -7,4 +7,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="FIles\Investments.csv" />
+    <None Remove="FIles\Quotes.csv" />
+    <None Remove="FIles\Transactions.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FIles\Investments.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FIles\Quotes.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FIles\Transactions.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

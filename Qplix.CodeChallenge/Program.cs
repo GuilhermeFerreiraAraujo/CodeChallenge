@@ -6,16 +6,31 @@ using Qplix.CodeChallenge.Constants;
 using Qplix.CodeChallenge.Enums;
 using Qplix.CodeChallenge.Services;
 using Qplix.CodeChallenge.Utils;
+using System.Reflection;
+using System;
+using System.IO;
+using System.Reflection;
+
 
 
 try
 {
-    
+
+
+    string executableLocation = Path.GetDirectoryName(
+Assembly.GetExecutingAssembly().Location);
+    string xslLocation = Path.Combine(executableLocation, "Files");
+
+
     #region PROJECT SET UP, reading files, loading datasets...
 
-    var investmentFileReader = new FileReader<Investment>(Config.FilePath,"Investments.csv");
-    var transactionFileReader = new FileReader<Transaction>(Config.FilePath,"Transactions.csv");
-    var quoteFileReader = new FileReader<Quote>(Config.FilePath,"Quotes.csv"); 
+
+    string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Files/");
+
+
+    var investmentFileReader = new FileReader<Investment>(path,"Investments.csv");
+    var transactionFileReader = new FileReader<Transaction>(path,"Transactions.csv");
+    var quoteFileReader = new FileReader<Quote>(path,"Quotes.csv"); 
 
     var investments = investmentFileReader.ReadFile();
     var transactions = transactionFileReader.ReadFile();
